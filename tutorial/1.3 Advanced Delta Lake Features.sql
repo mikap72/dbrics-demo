@@ -65,12 +65,33 @@ VACUUM employees
 -- COMMAND ----------
 
 -- MAGIC %python spark.conf.set("spark.databricks.delta.retentionDurationCheck.enabled", False)
--- MAGIC // Required for vacuuming w/o retention time (next). 
+-- MAGIC // Required for vacuuming w/o retention time (next). NOT IN PROD!
 -- MAGIC // Python seems to be the only way to update Spark conf settings after creation of Spark cluster.
 -- MAGIC // Compute -> Cluster -> Config / Advanced config / Spark cluster
+-- MAGIC // or %sql SET spark.databricks.delta.retentionDurationCheck.enabled = false;
 
 -- COMMAND ----------
 
 /* Vacuum with no retention time */
 
 VACUUM employees RETAIN 0 HOURS
+
+-- COMMAND ----------
+
+/* Fails due vacuum */
+SELECT * FROM employees@v1
+
+-- COMMAND ----------
+
+/*
+DROP TABLE employees 
+
+will remove table and accociated files permanently:
+
+SELECT * FROM employees
+-> Table or vied not found: employees exception thrown.
+
+%fs ls 'dbfs:/user/hive/warehouse/employees' 
+-> FileNotFoundException excemption thrown.
+
+*/
