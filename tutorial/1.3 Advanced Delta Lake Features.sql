@@ -1,0 +1,76 @@
+-- Databricks notebook source
+DESCRIBE HISTORY employees
+
+-- COMMAND ----------
+
+SELECT *
+FROM employees VERSION AS OF 1
+
+-- COMMAND ----------
+
+SELECT *
+FROM employees@v1
+
+-- COMMAND ----------
+
+DELETE FROM employees
+
+-- COMMAND ----------
+
+SELECT * FROM employees
+
+-- COMMAND ----------
+
+RESTORE TABLE employees TO VERSION AS OF 2
+
+-- COMMAND ----------
+
+SELECT * FROM employees
+
+-- COMMAND ----------
+
+DESCRIBE HISTORY employees
+
+-- COMMAND ----------
+
+/* Optimize */
+DESCRIBE DETAIL employees
+
+-- COMMAND ----------
+
+OPTIMIZE employees
+ZORDER BY (id)
+
+-- COMMAND ----------
+
+DESCRIBE DETAIL employees
+
+-- COMMAND ----------
+
+DESCRIBE HISTORY employees
+
+-- COMMAND ----------
+
+-- MAGIC %fs ls 'dbfs:/user/hive/warehouse/employees'
+
+-- COMMAND ----------
+
+/* Vacuum */
+VACUUM employees
+
+-- COMMAND ----------
+
+-- MAGIC %fs ls 'dbfs:/user/hive/warehouse/employees'
+
+-- COMMAND ----------
+
+-- MAGIC %python spark.conf.set("spark.databricks.delta.retentionDurationCheck.enabled", False)
+-- MAGIC // Required for vacuuming w/o retention time (next). 
+-- MAGIC // Python seems to be the only way to update Spark conf settings after creation of Spark cluster.
+-- MAGIC // Compute -> Cluster -> Config / Advanced config / Spark cluster
+
+-- COMMAND ----------
+
+/* Vacuum with no retention time */
+
+VACUUM employees RETAIN 0 HOURS

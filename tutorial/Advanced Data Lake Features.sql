@@ -1,0 +1,68 @@
+-- Databricks notebook source
+-- MAGIC %md
+-- MAGIC # Advanced Data Lake Features
+-- MAGIC
+-- MAGIC ## Time Travel
+-- MAGIC
+-- MAGIC Query older versions of the data
+-- MAGIC
+-- MAGIC Using the time stamp
+-- MAGIC
+-- MAGIC ```sql
+-- MAGIC SELECT * FROM my_table TIMESTAMP AS OF "2019-01-01"
+-- MAGIC ```
+-- MAGIC
+-- MAGIC Using version number
+-- MAGIC
+-- MAGIC ```sql
+-- MAGIC SELECT * FROM my_table VERSION AS OF 36
+-- MAGIC ```
+-- MAGIC
+-- MAGIC ```sql
+-- MAGIC SELECT * FROM my_table@v36
+-- MAGIC ```
+-- MAGIC
+-- MAGIC ## Rollback versions
+-- MAGIC
+-- MAGIC `RESTORE TABLE` command:
+-- MAGIC
+-- MAGIC ```sql
+-- MAGIC RESTORE TABLE my_table TO TIMESTAMP AS OF "2019-01-01"
+-- MAGIC ```
+-- MAGIC
+-- MAGIC ```sql
+-- MAGIC RESTORE TABLE my_table TO VERSION AS OF 36
+-- MAGIC ```
+-- MAGIC
+-- MAGIC ## Compaction
+-- MAGIC
+-- MAGIC Compacting Small Files
+-- MAGIC
+-- MAGIC `OPTIMIZE` command:
+-- MAGIC
+-- MAGIC ```sql
+-- MAGIC OPTIMIZE my_table
+-- MAGIC ```
+-- MAGIC
+-- MAGIC Combines data table files to larger file(s). This improves table performance.
+-- MAGIC
+-- MAGIC ```sql
+-- MAGIC OPTIMIZE my_table
+-- MAGIC   ZORDER BY column_name
+-- MAGIC ```
+-- MAGIC
+-- MAGIC Compacted files contain data for the for the coumns selected selected by `ZORDER BY` in orde, so it can be calculated, in which file dat for certain index numnber for that column are. This improves performance.
+-- MAGIC
+-- MAGIC ## Vacuum a Delta table
+-- MAGIC
+-- MAGIC Cleaning up unused data files
+-- MAGIC - uncommitted files
+-- MAGIC - files that are no longer in the latest table state
+-- MAGIC
+-- MAGIC ```sql
+-- MAGIC VACUUM my_table <retention period>
+-- MAGIC ```
+-- MAGIC
+-- MAGIC Default retention period: 7 days.
+-- MAGIC
+-- MAGIC `NOTE`: vacuum = no time travel possible beyond retention period.
