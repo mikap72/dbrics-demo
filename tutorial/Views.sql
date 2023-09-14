@@ -1,0 +1,79 @@
+-- Databricks notebook source
+-- MAGIC %md
+-- MAGIC # Views
+-- MAGIC
+-- MAGIC ## Learning objectives
+-- MAGIC
+-- MAGIC Views
+-- MAGIC Types of views.
+-- MAGIC
+-- MAGIC ## View
+-- MAGIC
+-- MAGIC Logical query against source tables.
+-- MAGIC
+-- MAGIC ## Types of views
+-- MAGIC
+-- MAGIC (Stored) views
+-- MAGIC Temporary views
+-- MAGIC Global Temporary Views
+-- MAGIC
+-- MAGIC ## Stored Views
+-- MAGIC
+-- MAGIC Are persisted objects.
+-- MAGIC
+-- MAGIC ```sql
+-- MAGIC CREATE VIEW view_name
+-- MAGIC   AS query
+-- MAGIC ```
+-- MAGIC
+-- MAGIC
+-- MAGIC ## Temporary views
+-- MAGIC
+-- MAGIC Are session-scoped views.
+-- MAGIC
+-- MAGIC ```sql
+-- MAGIC CREATE TEMP VIEW view_name
+-- MAGIC   AS query
+-- MAGIC ```
+-- MAGIC
+-- MAGIC ### Spark sessions
+-- MAGIC
+-- MAGIC Are created:
+-- MAGIC - when opening a new notebook.
+-- MAGIC - when attaching and deattaching to a cluster.
+-- MAGIC - after installing a Python package.
+-- MAGIC - after restarting the cluster.
+-- MAGIC
+-- MAGIC
+-- MAGIC ### Global Temporary views
+-- MAGIC
+-- MAGIC Are cluster-scoped views.
+-- MAGIC
+-- MAGIC ```sql
+-- MAGIC CREATE GLOBAL TEMP VIEW view_name
+-- MAGIC   AS query;
+-- MAGIC
+-- MAGIC SELECT * FROM global_temp.view_name;
+-- MAGIC ```
+-- MAGIC
+-- MAGIC ## Views comparision
+-- MAGIC
+-- MAGIC Stored views:
+-- MAGIC
+-- MAGIC - persisted in d/b.
+-- MAGIC - dropped only by `DROP VIEW`
+-- MAGIC - `CREATE VIEW`
+-- MAGIC
+-- MAGIC Temporary views:
+-- MAGIC
+-- MAGIC - session-scoped.
+-- MAGIC - dropped when the session ends
+-- MAGIC - `CREATE TEMP VIEW`
+-- MAGIC
+-- MAGIC Global temp views:
+-- MAGIC
+-- MAGIC - cluster-scoped.
+-- MAGIC - dropped when the cluster starts.
+-- MAGIC - `CREATE GLOBAL TEMP VIEW`
+-- MAGIC
+-- MAGIC
