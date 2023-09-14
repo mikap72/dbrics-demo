@@ -1,0 +1,69 @@
+-- Databricks notebook source
+-- MAGIC %md
+-- MAGIC # Relational Entities on Databrics
+-- MAGIC
+-- MAGIC ## Learning objectives
+-- MAGIC
+-- MAGIC Databases
+-- MAGIC Tables
+-- MAGIC The impact of `LOCATION` keyword
+-- MAGIC
+-- MAGIC ## Database
+-- MAGIC
+-- MAGIC Databases are Schemas in Hive metastore. Thus:
+-- MAGIC
+-- MAGIC ```sql
+-- MAGIC CREATE DATABASE db_name
+-- MAGIC CREATE SCHEMA db_name
+-- MAGIC ```
+-- MAGIC
+-- MAGIC are equal.
+-- MAGIC
+-- MAGIC ## Hive metastore
+-- MAGIC
+-- MAGIC Is repository of metadata
+-- MAGIC - databases
+-- MAGIC - tables
+-- MAGIC - partitions
+-- MAGIC - etc.
+-- MAGIC
+-- MAGIC You gave `default` database in Workspace, when it is created. You can create additonal databases by:
+-- MAGIC
+-- MAGIC ```sql
+-- MAGIC CREATE SCHEMA db_2;
+-- MAGIC ```
+-- MAGIC
+-- MAGIC Switch focus to new database with `USE` command:
+-- MAGIC
+-- MAGIC ```sql
+-- MAGIC USE db_2;
+-- MAGIC ```
+-- MAGIC
+-- MAGIC Now `CREATE TABLE` will create new tables to the new d/b:
+-- MAGIC
+-- MAGIC ```sql
+-- MAGIC CREATE TABLE table_1;
+-- MAGIC CREATE TABLE table_2;
+-- MAGIC ```
+-- MAGIC
+-- MAGIC ## Tables
+-- MAGIC
+-- MAGIC Managed tables
+-- MAGIC - created under the database directory
+-- MAGIC
+-- MAGIC ```sql
+-- MAGIC  CREATE TABLR table_name;
+-- MAGIC ```
+-- MAGIC - Dropping the table delete the underlying data fiels
+-- MAGIC
+-- MAGIC External tables
+-- MAGIC - Created outside the database directory
+-- MAGIC
+-- MAGIC ```sql
+-- MAGIC CREATE TABLE table_name
+-- MAGIC    LOCATION 'path';
+-- MAGIC    /* 'path'= 'dbfs:some/path/to_table', for example. */
+-- MAGIC ```
+-- MAGIC - Dropping the table does `not` delete the underlying data files.
+-- MAGIC
+-- MAGIC
